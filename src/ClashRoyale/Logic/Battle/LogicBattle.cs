@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
+using ClashRoyale.Core;
 using ClashRoyale.Core.Cluster;
 using ClashRoyale.Extensions;
 using ClashRoyale.Files;
@@ -10,10 +11,13 @@ using ClashRoyale.Protocol.Messages.Server;
 using ClashRoyale.Utilities.Models.Battle.Replay;
 using ClashRoyale.Utilities.Netty;
 using DotNetty.Buffers;
+using SharpRaven;
 using SharpRaven.Data;
 
 namespace ClashRoyale.Logic.Battle
 {
+    
+
     public class LogicBattle : List<Player>
     {
         /// <summary>
@@ -70,6 +74,8 @@ namespace ClashRoyale.Logic.Battle
         public bool IsRunning => BattleTimer.Enabled;
         public bool IsReady => Count >= (Is2V2 ? 4 : 2);
 
+        public static int MinTrophies = 0;
+        public static int MaxTrophy = 0;
         public async void Start()
         {
             if (!IsReady) return;
@@ -819,7 +825,7 @@ namespace ClashRoyale.Logic.Battle
                             if (BattleSeconds <= 10) continue;
 
                             var rnd = new Random();
-                            var trophies = IsFriendly || Is2V2 ? 0 : rnd.Next(15, 30);
+                            var trophies = IsFriendly || Is2V2 ? 0 : rnd.Next(MinTrophies, MaxTrophy);
 
                             if (!IsFriendly)
                             {
@@ -896,7 +902,7 @@ namespace ClashRoyale.Logic.Battle
             if (player == null) return;
 
             var rnd = new Random();
-            var trophies = IsFriendly || Is2V2 ? 0 : rnd.Next(15, 30);
+            var trophies = IsFriendly || Is2V2 ? 0 : rnd.Next(MinTrophies, MaxTrophy);
 
             if (!IsFriendly)
             {

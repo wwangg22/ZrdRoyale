@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using ClashRoyale.Logic.Battle;
+using ClashRoyale.Logic.Home;
 using Newtonsoft.Json;
 
 namespace ClashRoyale.Core
@@ -38,7 +40,11 @@ namespace ClashRoyale.Core
         [JsonProperty("server_port")] public int ServerPort = 9339;
         [JsonProperty("update_url")] public string UpdateUrl = "https://github.com/retroroyale/ClashRoyale";
         [JsonProperty("use_content_patch")] public bool UseContentPatch;
-
+        [JsonProperty("MinTrophies")] public int MinTroph;
+        [JsonProperty("MaxTrophies")] public int MaxTroph;
+        [JsonProperty("DefaultGold")] public int DefGold;
+        [JsonProperty("DefaultGems")] public int DefGems;
+        [JsonProperty("DefaultLevel")] public int DefLevel;
         [JsonProperty("use_udp")] public bool UseUdp;
 
         /// <summary>
@@ -70,6 +76,11 @@ namespace ClashRoyale.Core
 
                     ClusterKey = config.ClusterKey;
                     ClusterNonce = config.ClusterNonce;
+                    LogicBattle.MinTrophies = config.MinTroph;
+                    LogicBattle.MaxTrophy = config.MaxTroph;
+                    Home.DefaultGems = config.DefGems;
+                    Home.DefaultLevel = config.DefLevel;
+                    Home.DefaultGold = config.DefGold;
                 }
                 catch (Exception)
                 {

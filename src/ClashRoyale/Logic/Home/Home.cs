@@ -33,7 +33,9 @@ namespace ClashRoyale.Logic.Home
             Arena.Home = this;
             Chests.Home = this;
         }
-
+        public static int DefaultGold = 0;
+        public static int DefaultGems = 0;
+        public static int DefaultLevel = 1;
         public Home(long id, string token)
         {
             Id = id;
@@ -41,11 +43,11 @@ namespace ClashRoyale.Logic.Home
 
             PreferredDeviceLanguage = "EN";
 
-            Gold = 100;
-            Diamonds = 1000000;
+            Gold = DefaultGold;
+            Diamonds = DefaultGems;
 
             Name = "NoName";
-            ExpLevel = 1;
+            ExpLevel = DefaultLevel;
 
             Decks = new int[5][];
             for (var i = 0; i < 5; i++) Decks[i] = new int[8];

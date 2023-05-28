@@ -24,17 +24,21 @@ namespace ClashRoyale.Logic.Home.Shop
             Home.ShopDay = (int) DateTime.UtcNow.DayOfWeek;
             Clear();
 
-            /*if (IsEpicSunday)
+            if (IsEpicSunday)
             {
                 Add(RandomSpell(Card.Rarity.Rare));
                 Add(RandomSpell(Card.Rarity.Epic));
                 Add(RandomSpell(Card.Rarity.Legendary));
             }
-            else*/
+            else
             {
+
                 Add(RandomSpell(Card.Rarity.Common));
-                Add(RandomSpell(Card.Rarity.Rare));
-                Add(RandomSpell(Card.Rarity.Epic));
+                Add(RandomSpell(Card.Rarity.Legendary));
+                Add(RandomSpell(Card.Rarity.Legendary));
+                Add(RandomSpell(Card.Rarity.Legendary));
+                Add(RandomSpell(Card.Rarity.Hero));
+
             }
         }
 
