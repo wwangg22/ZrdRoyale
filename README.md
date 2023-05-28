@@ -5,8 +5,8 @@
 
 -----------------------------------------
 ## ✔What was added/changed in this fork✔
-Fixed DB(before fixing saving players progress always failed due to non existing column)<br />
-Now server is more customizable without recompiling it, now you can edit:
+1. Fixed DB(before fixing saving players progress always failed due to non existing column)<br />
+2. Now server is more customizable without recompiling it, now you can edit:
 ```
 Minimum Trophies and Maximum Trophies after Win
 Default amount of gems and gold
