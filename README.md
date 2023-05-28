@@ -3,8 +3,20 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![Build Status](https://action-badges.now.sh/retroroyale/ClashRoyale)
 
-## make sure to checkout my [latest project](https://github.com/Incr3dible/sc-utility)
+-----------------------------------------
+## ✔What was added/changed in this fork✔
+Fixed DB(before fixing saving players progress always failed due to non existing column)<br />
+Now server is more customizable without recompiling it, now you can edit:
+```
+Minimum Trophies and Maximum Trophies after Win
+Default amount of gems and gold
+```
 
+# TODO ✅
+```
+Console commands
+Remake README.md
+```
 #### A .NET Core Clash Royale Server (v1.9)
 ##### Need help? Join our [Discord](https://discord.gg/8cHkNE6)
 
