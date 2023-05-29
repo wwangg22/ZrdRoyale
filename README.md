@@ -14,6 +14,7 @@ Default amount of gems and gold
 
 # TODO ✅
 ```
+Fix System.ArgumentOutOfRangeException on account creation
 Console commands
 Remake README.md
 ```
