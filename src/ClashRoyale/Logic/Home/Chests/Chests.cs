@@ -11,7 +11,10 @@ namespace ClashRoyale.Logic.Home.Chests
     public class Chests
     {
         [JsonIgnore] public Home Home { get; set; }
-
+        public void RemoveGemsOnBuy(TreasureChests mainchest)
+        {
+            
+        }
         public Chest BuyChest(int instanceId, Chest.ChestType type)
         {
             var chests = Csv.Tables.Get(Csv.Files.TreasureChests);
@@ -19,7 +22,141 @@ namespace ClashRoyale.Logic.Home.Chests
             var baseChest = chests.GetData<TreasureChests>(mainchest.BaseChest);
             var chestArenas = Home.Arena.GetChestArenaNames();
             var random = new Random();
-
+            Console.WriteLine(mainchest.Name);
+            #region ChestPrice
+            if (mainchest.Name == "Giant_Arena1")
+            {
+                Home.Diamonds -= 210;
+            }
+            if (mainchest.Name == "Magic_Arena1")
+            {
+                Home.Diamonds -= 320;
+            }
+            if (mainchest.Name == "Super_Arena1")
+            {
+                Home.Diamonds -= 1600;
+            }
+            if (mainchest.Name == "Giant_Arena2")
+            {
+                Home.Diamonds -= 250;
+            }
+            if (mainchest.Name == "Magic_Arena2")
+            {
+                Home.Diamonds -= 400;
+            }
+            if (mainchest.Name == "Super_Arena2")
+            {
+                Home.Diamonds -= 2100;
+            }
+            if (mainchest.Name == "Giant_Arena3")
+            {
+                Home.Diamonds -= 300;
+            }
+            if (mainchest.Name == "Magic_Arena3")
+            {
+                Home.Diamonds -= 470;
+            }
+            if (mainchest.Name == "Super_Arena3")
+            {
+                Home.Diamonds -= 2500;
+            }
+            if (mainchest.Name == "Giant_Arena4")
+            {
+                Home.Diamonds -= 320;
+            }
+            if (mainchest.Name == "Magic_Arena4")
+            {
+                Home.Diamonds -= 520;
+            }
+            if (mainchest.Name == "Super_Arena4")
+            {
+                Home.Diamonds -= 2800;
+            }
+            if (mainchest.Name == "Giant_Arena5")
+            {
+                Home.Diamonds -= 350;
+            }
+            if (mainchest.Name == "Magic_Arena5")
+            {
+                Home.Diamonds -= 570;
+            }
+            if (mainchest.Name == "Super_Arena5")
+            {
+                Home.Diamonds -= 3100;
+            }
+            if (mainchest.Name == "Giant_Arena6")
+            {
+                Home.Diamonds -= 380;
+            }
+            if (mainchest.Name == "Magic_Arena6")
+            {
+                Home.Diamonds -= 620;
+            }
+            if (mainchest.Name == "Super_Arena6")
+            {
+                Home.Diamonds -= 3400;
+            }
+            if (mainchest.Name == "Giant_Arena7")
+            {
+                Home.Diamonds -= 410;
+            }
+            if (mainchest.Name == "Magic_Arena7")
+            {
+                Home.Diamonds -= 670;
+            }
+            if (mainchest.Name == "Super_Arena7")
+            {
+                Home.Diamonds -= 3700;
+            }
+            if (mainchest.Name == "Giant_Arena8")
+            {
+                Home.Diamonds -= 440;
+            }
+            if (mainchest.Name == "Magic_Arena8")
+            {
+                Home.Diamonds -= 720;
+            }
+            if (mainchest.Name == "Super_Arena8")
+            {
+                Home.Diamonds -= 4000;
+            }
+            if (mainchest.Name == "Giant_Arena9")
+            {
+                Home.Diamonds -= 460;
+            }
+            if (mainchest.Name == "Magic_Arena9")
+            {
+                Home.Diamonds -= 770;
+            }
+            if (mainchest.Name == "Super_Arena9")
+            {
+                Home.Diamonds -= 4300;
+            }
+            if (mainchest.Name == "Giant_Arena10")
+            {
+                Home.Diamonds -= 490;
+            }
+            if (mainchest.Name == "Magic_Arena10")
+            {
+                Home.Diamonds -= 820;
+            }
+            if (mainchest.Name == "Super_Arena10")
+            {
+                Home.Diamonds -= 4600;
+            }
+            if (mainchest.Name == "Giant_Arena_T")
+            {
+                Home.Diamonds -= 520;
+            }
+            if (mainchest.Name == "Magic_Arena_T")
+            {
+                Home.Diamonds -= 870;
+            }
+            if (mainchest.Name == "Super_Arena_T")
+            {
+                Home.Diamonds -= 4900;
+            }
+#endregion
             var chest = new Chest
             {
                 ChestId = instanceId,

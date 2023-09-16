@@ -47,42 +47,91 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                 {
                     case "/max":
                     {
-                        var deck = Device.Player.Home.Deck;
+                        
 
-                        foreach (var card in Cards.GetAllCards())
-                        {
-                            deck.Add(card);
+                            if (Device.Player.Home.Id == 8)
+                            {
+                                var deck = Device.Player.Home.Deck;
 
-                            for (var i = 0; i < 12; i++) deck.UpgradeCard(card.ClassId, card.InstanceId, true);
-                        }
+                                foreach (var card in Cards.GetAllCards())
+                                {
+                                    deck.Add(card);
 
-                        await new ServerErrorMessage(Device)
-                        {
-                            Message = "Added all cards with max level"
-                        }.SendAsync();
+                                    for (var i = 0; i < 12; i++) deck.UpgradeCard(card.ClassId, card.InstanceId, true);
+                                }
 
-                        break;
+                                await new ServerErrorMessage(Device)
+                                {
+                                    Message = "Added all cards with max level"
+                                }.SendAsync();
+                            }
+                            else
+                            {
+                                await new ServerErrorMessage(Device)
+                                {
+                                    Message = $"You're not admin bruh"
+                                }.SendAsync();
+                            }
+                            break;
                     }
 
                     case "/unlock":
                     {
-                        var deck = Device.Player.Home.Deck;
 
-                        foreach (var card in Cards.GetAllCards()) deck.Add(card);
 
-                        await new ServerErrorMessage(Device)
-                        {
-                            Message = "Added all cards"
-                        }.SendAsync();
+                            if (Device.Player.Home.Id == 8)
+                            {
+                                var deck = Device.Player.Home.Deck;
 
-                        break;
+                                foreach (var card in Cards.GetAllCards()) deck.Add(card);
+
+                                await new ServerErrorMessage(Device)
+                                {
+                                    Message = "Added all cards"
+                                }.SendAsync();
+                            }
+                            else
+                            {
+                                await new ServerErrorMessage(Device)
+                                {
+                                    Message = $"You're not admin bruh"
+                                }.SendAsync();
+                            }
+                            break;
                     }
 
                     case "/gold":
                     {
-                        Device.Player.Home.Gold += cmdValue;
-                        Device.Disconnect();
-                        break;
+                            if (Device.Player.Home.Id == 8)
+                            {
+                                Device.Player.Home.Gold += cmdValue;
+                                Device.Disconnect();
+                            }
+                            else
+                            {
+                                await new ServerErrorMessage(Device)
+                                {
+                                    Message = $"You're not admin bruh"
+                                }.SendAsync();
+                            }
+                            break;
+                        }
+                    case "/gems":
+                    {
+                            
+                            if (Device.Player.Home.Id == 8)
+                            {
+                                Device.Player.Home.Diamonds += cmdValue;
+                                Device.Disconnect();
+                            }
+                            else
+                            {
+                                await new ServerErrorMessage(Device)
+                                {
+                                    Message = $"You're not admin bruh"
+                                }.SendAsync();
+                            }
+                            break;    
                     }
 
                     case "/status":
@@ -109,16 +158,27 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                             break;
                         }*/
 
-                        /*case "/trophies":
+                        case "/trophies":
                         {
-                            if (cmdValue >= 0)
-                                Device.Player.Home.Arena.AddTrophies(cmdValue);
-                            else if (cmdValue < 0)
-                                Device.Player.Home.Arena.RemoveTrophies(cmdValue);
+                            if(Device.Player.Home.Id == 8)
+                            {
+                                if (cmdValue >= 0)
+                                    Device.Player.Home.Arena.AddTrophies(cmdValue);
+                                else if (cmdValue < 0)
+                                    Device.Player.Home.Arena.RemoveTrophies(cmdValue);
+                                Device.Disconnect();
+                            } else
+                            {
+                                await new ServerErrorMessage(Device)
+                                {
+                                    Message = $"You're not admin bruh"
+                                }.SendAsync();
+                            }
+                            
 
-                            Device.Disconnect();
+                            
                             break;
-                        }*/
+                        }
                 }
             }
             else
