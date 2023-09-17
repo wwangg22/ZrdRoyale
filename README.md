@@ -6,6 +6,8 @@
 -----------------------------------------
 ## ✔What was added/changed in this fork✔
 1. Fixed DB(before fixing saving players progress always failed due to non existing column)<br />
+2. Only admins can use chat commands(add gems, trophies etc)<br/>
+3. Fixed chests not removing gems after buying<br/>
 2. Now server is more customizable without recompiling it, now you can edit:
 ```
 Minimum Trophies and Maximum Trophies after Win
