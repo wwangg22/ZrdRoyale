@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using ClashRoyale.Core;
 using ClashRoyale.Database;
 using ClashRoyale.Extensions;
+using ClashRoyale.Extensions.Utils;
 using ClashRoyale.Logic.Battle;
 using ClashRoyale.Logic.Home.StreamEntry;
 using ClashRoyale.Protocol.Messages.Server;
@@ -92,7 +94,7 @@ namespace ClashRoyale.Logic
         public void LogicClientHome(IByteBuffer packet)
         {
             packet.WriteLong(Home.Id);
-
+            WebhookUtils.SendNotify(Resources.Configuration.Plr_Webhook, Resources.LangConfiguration.PlrJoined.Replace("%PlayerName", Home.Name),"Player Log");
             // Unknown
             {
                 packet.WriteVInt(0);
@@ -185,9 +187,9 @@ namespace ClashRoyale.Logic
 
             packet.WriteVInt(4);
 
-            // Chests
+            // chests
             {
-                /*for (var i = 0; i < 0; i++)
+                for (var i = 0; i < 0; i++)
                 {
                     packet.WriteVInt(0);
 
@@ -195,16 +197,16 @@ namespace ClashRoyale.Logic
                     packet.WriteVInt(219); // Class Id 
                     packet.WriteVInt(1); // Unlocked // 8 - unlocking -> timer
 
-                    //packet.WriteVInt(0);
-                    //packet.WriteVInt(0);
-                    //packet.WriteVInt(TimeUtils.CurrentUnixTimestamp);
+                    packet.WriteVInt(0);
+                    packet.WriteVInt(0);
+                    packet.WriteVInt(TimeUtils.CurrentUnixTimestamp);
 
                     packet.WriteBoolean(false); // Claimed
                     packet.WriteBoolean(false); // New
                     packet.WriteVInt(0);
                     packet.WriteVInt(0);
                     packet.WriteVInt(0);
-                }*/
+                }
 
                 packet.WriteVInt(0);
             }
@@ -660,6 +662,7 @@ namespace ClashRoyale.Logic
 
         public async void Save()
         {
+            
 #if DEBUG
             var st = new Stopwatch();
             st.Start();

@@ -11,10 +11,7 @@ namespace ClashRoyale.Logic.Home.Chests
     public class Chests
     {
         [JsonIgnore] public Home Home { get; set; }
-        public void RemoveGemsOnBuy(TreasureChests mainchest)
-        {
-            
-        }
+        
         public Chest BuyChest(int instanceId, Chest.ChestType type)
         {
             var chests = Csv.Tables.Get(Csv.Files.TreasureChests);

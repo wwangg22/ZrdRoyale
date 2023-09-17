@@ -5,6 +5,7 @@ using System.Timers;
 using ClashRoyale.Core;
 using ClashRoyale.Core.Cluster;
 using ClashRoyale.Extensions;
+using ClashRoyale.Extensions.Utils;
 using ClashRoyale.Files;
 using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Protocol.Messages.Server;
@@ -31,8 +32,7 @@ namespace ClashRoyale.Logic.Battle
             Arena = arena;
             Location = Csv.Tables.Get(Csv.Files.Locations)
                            .GetData<Locations>(Csv.Tables.Get(Csv.Files.Arenas)
-                               .GetDataWithInstanceId<Arenas>(Arena - 1).PvpLocation).GetInstanceId() +
-                       1;
+                                .GetDataWithInstanceId<Arenas>(1).PvpLocation).GetInstanceId();
             Replay.Battle.Location = 15000000 + Location;
 
             BattleTimer.Elapsed += Tick;
@@ -76,6 +76,7 @@ namespace ClashRoyale.Logic.Battle
 
         public static int MinTrophies = 0;
         public static int MaxTrophy = 0;
+        
         public async void Start()
         {
             if (!IsReady) return;
@@ -86,11 +87,16 @@ namespace ClashRoyale.Logic.Battle
                 if (Resources.Configuration.UseUdp)
                     server = Resources.NodeManager.GetServer();
 
+
+
+                WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.BattleStarted.Replace("%id", BattleId.ToString()), "Battle Log");
                 //var second = false;
                 foreach (var player in this)
                 {
-                    Commands.Add(player.Home.Id, new Queue<byte[]>());
 
+                    WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.PlayerJoined.Replace("%id", BattleId.ToString()).Replace("%username", player.Home.Name), "Battle Log");
+                    Commands.Add(player.Home.Id, new Queue<byte[]>());
+                    
                     // Add decks to replay
                     /*if (!second)
                     {
@@ -103,7 +109,7 @@ namespace ClashRoyale.Logic.Battle
                         Replay.Battle.Avatar1 = player.Home.BattleAvatar;
                         Replay.Battle.Deck0 = player.Home.BattleDeck;
                     }*/
-
+                    
                     if (server != null)
                         await new UdpConnectionInfoMessage(player.Device)
                         {
@@ -128,6 +134,7 @@ namespace ClashRoyale.Logic.Battle
             catch (Exception)
             {
                 Logger.Log("Couldn't start battle", GetType(), ErrorLevel.Error);
+
             }
         }
 
@@ -811,25 +818,30 @@ namespace ClashRoyale.Logic.Battle
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
+        bool bShouldSendEndMatch = false;
         public async void Tick(object sender, ElapsedEventArgs args)
         {
             #region Tick
 
             try
             {
+                
+                
                 foreach (var player in ToArray())
                     if (player.Device.IsConnected)
                     {
+                        
                         if (player.Device.SecondsSinceLastCommand > 2)
                         {
                             if (BattleSeconds <= 10) continue;
 
                             var rnd = new Random();
                             var trophies = IsFriendly || Is2V2 ? 0 : rnd.Next(MinTrophies, MaxTrophy);
-
+                            
                             if (!IsFriendly)
                             {
-                                player.Home.AddCrowns(3);
+                                bShouldSendEndMatch = true;
+                                player.Home.AddCrowns(10);
                                 player.Home.Arena.AddTrophies(trophies);
                             }
 
@@ -853,7 +865,11 @@ namespace ClashRoyale.Logic.Battle
                     {
                         Remove(player);
                     }
-
+                if(bShouldSendEndMatch)
+                {
+                    WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.BattleEnded.Replace("%id", BattleId.ToString()), "Battle Log");
+                    bShouldSendEndMatch = false;
+                }
                 if (FindIndex(p => p?.Device.SecondsSinceLastCommand < 10) <= -1)
                     Stop();
             }

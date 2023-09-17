@@ -16,12 +16,12 @@ namespace ClashRoyale.Logic.Home.Shop
     public class Shop : List<ShopItem>
     {
         [JsonIgnore] public Home Home { get; set; }
-        [JsonIgnore] public bool CanRefresh => Home.ShopDay != (int) DateTime.UtcNow.DayOfWeek;
+        [JsonIgnore] public bool CanRefresh => Home.ShopDay != (int)DateTime.UtcNow.DayOfWeek;
         [JsonIgnore] public bool IsEpicSunday => DateTime.UtcNow.DayOfWeek == DayOfWeek.Sunday;
 
         public void Refresh()
         {
-            Home.ShopDay = (int) DateTime.UtcNow.DayOfWeek;
+            Home.ShopDay = (int)DateTime.UtcNow.DayOfWeek;
             Clear();
 
             if (IsEpicSunday)
@@ -47,9 +47,9 @@ namespace ClashRoyale.Logic.Home.Shop
             if (CanRefresh)
                 Refresh();
 
-            packet.WriteVInt((int) DateTime.UtcNow.DayOfWeek + 1); // Shop Day
-            packet.WriteVInt((int) DateTime.UtcNow.DayOfWeek + 1); // Shop Seed
-            packet.WriteVInt((int) DateTime.UtcNow.DayOfWeek + 1); // Shop Day Seen
+            packet.WriteVInt((int)DateTime.UtcNow.DayOfWeek + 1); // Shop Day
+            packet.WriteVInt((int)DateTime.UtcNow.DayOfWeek + 1); // Shop Seed
+            packet.WriteVInt((int)DateTime.UtcNow.DayOfWeek + 1); // Shop Day Seen
 
             packet.WriteVInt(TimeUtils.GetSecondsUntilTomorrow * 20);
             packet.WriteVInt(TimeUtils.GetSecondsUntilTomorrow * 20);
@@ -99,13 +99,13 @@ namespace ClashRoyale.Logic.Home.Shop
                 var total = 0;
                 var count = amount != 1 ? limit - item.Bought : 1;
 
-                for (var i = 0; i < count; i++) 
+                for (var i = 0; i < count; i++)
                     total += price * (i + 1);
 
                 if (!Home.UseGold(total))
                     Logger.Log("Failed to Remove Gold", null);
-                
-        
+
+
                 item.Bought += count;
                 Home.Deck.Add(new Card(classId, instanceId, true, count));
             }

@@ -33,10 +33,8 @@ namespace ClashRoyale.Core
         [JsonProperty("mysql_password")] public string MySqlPassword = "";
         [JsonProperty("mysql_server")] public string MySqlServer = "127.0.0.1";
         [JsonProperty("mysql_user")] public string MySqlUserId = "root";
-
         [JsonProperty("patch_url")] public string PatchUrl = "";
         [JsonProperty("sentry_api")] public string SentryApiUrl = "";
-
         [JsonProperty("server_port")] public int ServerPort = 9339;
         [JsonProperty("update_url")] public string UpdateUrl = "https://github.com/retroroyale/ClashRoyale";
         [JsonProperty("use_content_patch")] public bool UseContentPatch;
@@ -46,6 +44,12 @@ namespace ClashRoyale.Core
         [JsonProperty("DefaultGems")] public int DefGems;
         [JsonProperty("DefaultLevel")] public int DefLevel;
         [JsonProperty("use_udp")] public bool UseUdp;
+        [JsonProperty("BattleLog_WebhookUrl")] public string BL_Webhook;
+        [JsonProperty("PlayerLog_WebhookUrl")] public string Plr_Webhook;
+        [JsonProperty("ServerLog_WebhookUrl")] public string Srv_Webhook;
+
+
+
 
         /// <summary>
         ///     Loads the configuration
@@ -81,6 +85,9 @@ namespace ClashRoyale.Core
                     Home.DefaultGems = config.DefGems;
                     Home.DefaultLevel = config.DefLevel;
                     Home.DefaultGold = config.DefGold;
+                    Srv_Webhook = config.Srv_Webhook;
+                    Plr_Webhook = config.Plr_Webhook;
+                    BL_Webhook = config.BL_Webhook;
                 }
                 catch (Exception)
                 {

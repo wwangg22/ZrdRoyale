@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using ClashRoyale.Core.Network.Handlers;
 using ClashRoyale.Core.Network.Handlers.Cluster;
+using ClashRoyale.Extensions.Utils;
 using DotNetty.Codecs;
 using DotNetty.Handlers.Logging;
 using DotNetty.Handlers.Timeout;
@@ -97,6 +99,7 @@ namespace ClashRoyale.Core.Network
             Logger.Log(
                 $"Listening on {endpoint.Address.MapToIPv4()}:{endpoint.Port}. Let's play ClashRoyale!",
                 GetType());
+            
         }
 
         /// <summary>

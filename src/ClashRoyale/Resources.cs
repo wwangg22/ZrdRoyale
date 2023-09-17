@@ -6,6 +6,7 @@ using ClashRoyale.Core.Leaderboards;
 using ClashRoyale.Core.Network;
 using ClashRoyale.Database;
 using ClashRoyale.Database.Cache;
+using ClashRoyale.Extensions.Utils;
 using ClashRoyale.Files;
 using ClashRoyale.Logic.Home.Decks;
 using ClashRoyale.Utilities.Utils;
@@ -17,6 +18,7 @@ namespace ClashRoyale
         public static Logger Logger { get; set; }
         public static SentryReport Sentry { get; set; }
         public static Configuration Configuration { get; set; }
+        public static LangConfiguration LangConfiguration { get; set; }
         public static PlayerDb PlayerDb { get; set; }
         public static AllianceDb AllianceDb { get; set; }
         public static ObjectCache ObjectCache { get; set; }
@@ -43,8 +45,10 @@ namespace ClashRoyale
                 null);
 
             Configuration = new Configuration();
+            LangConfiguration = new LangConfiguration();
             Configuration.Initialize();
-
+            LangConfiguration.Initialize();
+            
             NodeManager = new NodeManager();
 
             Fingerprint = new Fingerprint();
@@ -76,7 +80,7 @@ namespace ClashRoyale
             StartTime = DateTime.UtcNow;
 
             Netty = new NettyService();
-
+            
             await Task.Run(Netty.RunServerAsync);
         }
     }

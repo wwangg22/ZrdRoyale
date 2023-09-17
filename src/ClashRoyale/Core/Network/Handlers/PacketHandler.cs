@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
+using ClashRoyale.Extensions.Utils;
 using ClashRoyale.Logic;
+using ClashRoyale.Logic.Home;
 using DotNetty.Buffers;
 using DotNetty.Handlers.Timeout;
 using DotNetty.Transport.Channels;
@@ -55,9 +57,10 @@ namespace ClashRoyale.Core.Network.Handlers
 
         public override async void ChannelUnregistered(IChannelHandlerContext context)
         {
+            var player = await Resources.Players.GetPlayerAsync(Device.Player.Home.Id, true);
             if (Device?.Player?.Home != null)
             {
-                var player = await Resources.Players.GetPlayerAsync(Device.Player.Home.Id, true);
+                
                 if (player != null)
                     if (player.Device.Session.SessionId == Device.Session.SessionId)
                     {
@@ -86,6 +89,8 @@ namespace ClashRoyale.Core.Network.Handlers
 
             Logger.Log($"Client {remoteAddress.Address.MapToIPv4()}:{remoteAddress.Port} disconnected.", GetType(),
                 ErrorLevel.Debug);
+            
+            WebhookUtils.SendNotify(Resources.Configuration.Plr_Webhook, Resources.LangConfiguration.PlrConnLost.Replace("%PlayerName", player.Home.Name), "Player Log");
 
             base.ChannelUnregistered(context);
         }
