@@ -30,9 +30,18 @@ namespace ClashRoyale.Logic.Battle
         {
             IsFriendly = isFriendly;
             Arena = arena;
-            Location = Csv.Tables.Get(Csv.Files.Locations)
+            
+            if(arena >= 7)
+            {
+                Location = Csv.Tables.Get(Csv.Files.Locations)
                            .GetData<Locations>(Csv.Tables.Get(Csv.Files.Arenas)
-                                .GetDataWithInstanceId<Arenas>(1).PvpLocation).GetInstanceId();
+                                .GetDataWithInstanceId<Arenas>(arena).PvpLocation).GetInstanceId()+1;
+            } else
+            {
+                Location = Csv.Tables.Get(Csv.Files.Locations)
+                           .GetData<Locations>(Csv.Tables.Get(Csv.Files.Arenas)
+                                .GetDataWithInstanceId<Arenas>(arena - 1).PvpLocation).GetInstanceId()+1;
+            }
             Replay.Battle.Location = 15000000 + Location;
 
             BattleTimer.Elapsed += Tick;
@@ -56,10 +65,18 @@ namespace ClashRoyale.Logic.Battle
             Is2V2 = true;
 
             Arena = arena;
-            Location = Csv.Tables.Get(Csv.Files.Locations)
+            if (arena >= 7)
+            {
+                Location = Csv.Tables.Get(Csv.Files.Locations)
                            .GetData<Locations>(Csv.Tables.Get(Csv.Files.Arenas)
-                               .GetDataWithInstanceId<Arenas>(Arena - 1).TeamVsTeamLocation).GetInstanceId() +
-                       1;
+                                .GetDataWithInstanceId<Arenas>(arena).PvpLocation).GetInstanceId() + 1;
+            }
+            else
+            {
+                Location = Csv.Tables.Get(Csv.Files.Locations)
+                           .GetData<Locations>(Csv.Tables.Get(Csv.Files.Arenas)
+                                .GetDataWithInstanceId<Arenas>(arena - 1).PvpLocation).GetInstanceId() + 1;
+            }
 
             Replay.Battle.Location = 15000000 + Location;
 
