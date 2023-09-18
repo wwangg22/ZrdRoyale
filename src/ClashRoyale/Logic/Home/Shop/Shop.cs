@@ -24,21 +24,20 @@ namespace ClashRoyale.Logic.Home.Shop
             Home.ShopDay = (int)DateTime.UtcNow.DayOfWeek;
             Clear();
 
-            if (IsEpicSunday)
+            /*if (IsEpicSunday)
             {
-                Add(RandomSpell(Card.Rarity.Common));
-                Add(RandomSpell(Card.Rarity.Common));
                 Add(RandomSpell(Card.Rarity.Rare));
                 Add(RandomSpell(Card.Rarity.Epic));
+                Add(RandomSpell(Card.Rarity.Legendary));
             }
-            else
+            else*/
             {
-
                 Add(RandomSpell(Card.Rarity.Common));
                 Add(RandomSpell(Card.Rarity.Common));
                 Add(RandomSpell(Card.Rarity.Rare));
+                Add(RandomSpell(Card.Rarity.Rare));
                 Add(RandomSpell(Card.Rarity.Epic));
-
+                Add(RandomSpell(Card.Rarity.Epic));
             }
         }
 
@@ -102,10 +101,7 @@ namespace ClashRoyale.Logic.Home.Shop
                 for (var i = 0; i < count; i++)
                     total += price * (i + 1);
 
-                if (!Home.UseGold(total))
-                    Logger.Log("Failed to Remove Gold", null);
-
-
+                if (!Home.UseGold(total)) return;
                 item.Bought += count;
                 Home.Deck.Add(new Card(classId, instanceId, true, count));
             }

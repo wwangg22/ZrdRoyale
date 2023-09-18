@@ -47,6 +47,12 @@ namespace ClashRoyale.Core
         [JsonProperty("BattleLog_WebhookUrl")] public string BL_Webhook;
         [JsonProperty("PlayerLog_WebhookUrl")] public string Plr_Webhook;
         [JsonProperty("ServerLog_WebhookUrl")] public string Srv_Webhook;
+        [JsonProperty("AdminID1")] public int admin1;
+        [JsonProperty("AdminID2")] public int admin2;
+        [JsonProperty("AdminID3")] public int admin3;
+        [JsonProperty("GemsToGiveAfterMatch")] public int gemsreward;
+        [JsonProperty("GoldToGiveAfterMatch")] public int goldreward;
+
 
 
 
@@ -88,6 +94,9 @@ namespace ClashRoyale.Core
                     Srv_Webhook = config.Srv_Webhook;
                     Plr_Webhook = config.Plr_Webhook;
                     BL_Webhook = config.BL_Webhook;
+                    admin1 = config.admin1;
+                    admin2 = config.admin2;
+                    admin3 = config.admin3;
                 }
                 catch (Exception)
                 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Timers;
 using ClashRoyale.Core;
 using ClashRoyale.Core.Cluster;
+using ClashRoyale.Database;
 using ClashRoyale.Extensions;
 using ClashRoyale.Extensions.Utils;
 using ClashRoyale.Files;
@@ -31,7 +32,7 @@ namespace ClashRoyale.Logic.Battle
             IsFriendly = isFriendly;
             Arena = arena;
             
-            if(arena >= 7)
+            if(arena >= 7 && arena != 10)
             {
                 Location = Csv.Tables.Get(Csv.Files.Locations)
                            .GetData<Locations>(Csv.Tables.Get(Csv.Files.Arenas)
@@ -65,7 +66,7 @@ namespace ClashRoyale.Logic.Battle
             Is2V2 = true;
 
             Arena = arena;
-            if (arena >= 7)
+            if (arena >= 7 && arena != 10)
             {
                 Location = Csv.Tables.Get(Csv.Files.Locations)
                            .GetData<Locations>(Csv.Tables.Get(Csv.Files.Arenas)
@@ -858,6 +859,8 @@ namespace ClashRoyale.Logic.Battle
                             if (!IsFriendly)
                             {
                                 bShouldSendEndMatch = true;
+                                player.Home.Diamonds += Resources.Configuration.gemsreward;
+                                player.Home.Gold += Resources.Configuration.goldreward;
                                 player.Home.AddCrowns(10);
                                 player.Home.Arena.AddTrophies(trophies);
                             }

@@ -49,7 +49,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                     {
                         
 
-                            if (Device.Player.Home.Id == 8)
+                            if (ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
                             {
                                 var deck = Device.Player.Home.Deck;
 
@@ -79,7 +79,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                     {
 
 
-                            if (Device.Player.Home.Id == 8)
+                            if (ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
                             {
                                 var deck = Device.Player.Home.Deck;
 
@@ -102,7 +102,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
 
                     case "/gold":
                     {
-                            if (Device.Player.Home.Id == 8)
+                            if (ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
                             {
                                 Device.Player.Home.Gold += cmdValue;
                                 Device.Disconnect();
@@ -119,7 +119,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                     case "/gems":
                     {
                             
-                            if (Device.Player.Home.Id == 8)
+                            if (ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
                             {
                                 Device.Player.Home.Diamonds += cmdValue;
                                 Device.Disconnect();
@@ -160,7 +160,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
 
                         case "/trophies":
                         {
-                            if(Device.Player.Home.Id == 8)
+                            if(ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
                             {
                                 if (cmdValue >= 0)
                                     Device.Player.Home.Arena.AddTrophies(cmdValue);
