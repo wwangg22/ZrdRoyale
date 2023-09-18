@@ -8,15 +8,21 @@
 1. Fixed DB(before fixing saving players progress always failed due to non existing column)<br />
 2. Only admins can use chat commands(add gems, trophies etc)<br/>
 3. Fixed chests not removing gems after buying<br/>
-2. Now server is more customizable without recompiling it, now you can edit:
+4. Discord webhook logging(players connections,disconnections, battle logs etc)
+5. fixed bug where player after arena 7 were playing on wrong arena for example player on arena 9 was playing on frozen peak which is map from arena 8
+6. Gems and gold rewards after win.
+7. Now server is more customizable without recompiling it, now you can edit:
 ```
 Minimum Trophies and Maximum Trophies after Win
 Default amount of gems and gold
+Gems and gold rewards after win
+Admins
 ```
 
 # TODO ✅
 ```
-Console commands
+Fix trophies after winning
+fix free chests bug on arena 10
 Remake README.md
 ```
 ## Clash royale server for version 1.9.2/1.9.3 written in .NET
