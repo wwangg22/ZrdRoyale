@@ -859,6 +859,8 @@ namespace ClashRoyale.Logic.Battle
                             if (!IsFriendly)
                             {
                                 bShouldSendEndMatch = true;
+                                Console.WriteLine("Given to" + player.Home.Name + " " + Resources.Configuration.gemsreward + " gems");
+                                Console.WriteLine("Given to" + player.Home.Name + " " + Resources.Configuration.goldreward + " golds");
                                 player.Home.Diamonds += Resources.Configuration.gemsreward;
                                 player.Home.Gold += Resources.Configuration.goldreward;
                                 player.Home.AddCrowns(10);

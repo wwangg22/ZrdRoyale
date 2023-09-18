@@ -179,7 +179,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                             
                             break;
                         }
-                }
+                } 
             }
             else
             {

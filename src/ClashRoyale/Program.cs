@@ -19,6 +19,8 @@ namespace ClashRoyale
             Console.WriteLine("Thanks to Incredible for work on orginal version of CR server");
             Console.WriteLine("Fork of RetroRoyale by Zordon1337");
            
+            Console.WriteLine(Resources.Configuration.goldreward);
+            Console.WriteLine(Resources.Configuration.gemsreward);
             WebhookUtils.SendNotify(Resources.Configuration.Srv_Webhook, Resources.LangConfiguration.SrvStarting, "Server Log");
             if (ServerUtils.IsLinux())
             {
