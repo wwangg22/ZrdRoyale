@@ -97,6 +97,8 @@ namespace ClashRoyale.Core
                     admin1 = config.admin1;
                     admin2 = config.admin2;
                     admin3 = config.admin3;
+                    gemsreward = config.gemsreward;
+                    goldreward = config.goldreward;
                 }
                 catch (Exception)
                 {
