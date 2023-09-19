@@ -12,7 +12,7 @@
 5. fixed bug where player after arena 7 were playing on wrong arena for example player on arena 9 was playing on frozen peak which is map from arena 8
 6. Gems and gold rewards after win.
 7. Now server is more customizable without recompiling it, now you can edit:
-```
+``` 
 Minimum Trophies and Maximum Trophies after Win
 Default amount of gems and gold
 Gems and gold rewards after win
