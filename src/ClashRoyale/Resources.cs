@@ -48,7 +48,7 @@ namespace ClashRoyale
             LangConfiguration = new LangConfiguration();
             Configuration.Initialize();
             LangConfiguration.Initialize();
-            
+
             NodeManager = new NodeManager();
 
             Fingerprint = new Fingerprint();
@@ -80,7 +80,7 @@ namespace ClashRoyale
             StartTime = DateTime.UtcNow;
 
             Netty = new NettyService();
-            
+
             await Task.Run(Netty.RunServerAsync);
         }
     }

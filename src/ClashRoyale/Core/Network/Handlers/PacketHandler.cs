@@ -24,7 +24,7 @@ namespace ClashRoyale.Core.Network.Handlers
 
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
-            var buffer = (IByteBuffer) message;
+            var buffer = (IByteBuffer)message;
             if (buffer == null) return;
 
             if (Throttler.CanProcess())
@@ -47,7 +47,7 @@ namespace ClashRoyale.Core.Network.Handlers
         {
             Channel = context.Channel;
 
-            var remoteAddress = (IPEndPoint) Channel.RemoteAddress;
+            var remoteAddress = (IPEndPoint)Channel.RemoteAddress;
 
             Logger.Log($"Client {remoteAddress.Address.MapToIPv4()}:{remoteAddress.Port} connected.", GetType(),
                 ErrorLevel.Debug);
@@ -57,42 +57,49 @@ namespace ClashRoyale.Core.Network.Handlers
 
         public override async void ChannelUnregistered(IChannelHandlerContext context)
         {
-            var player = await Resources.Players.GetPlayerAsync(Device.Player.Home.Id, true);
-            if (Device?.Player?.Home != null)
+            try
             {
-                
-                if (player != null)
-                    if (player.Device.Session.SessionId == Device.Session.SessionId)
-                    {
-                        Resources.Players.LogoutById(player.Home.Id);
+                var player = await Resources.Players.GetPlayerAsync(Device.Player.Home.Id, true);
+                if (Device?.Player?.Home != null)
+                {
 
-                        if (player.Home.AllianceInfo.HasAlliance)
+                    if (player != null)
+                        if (player.Device.Session.SessionId == Device.Session.SessionId)
                         {
-                            var alliance = await Resources.Alliances.GetAllianceAsync(player.Home.AllianceInfo.Id);
-                            if (alliance != null)
-                            {
-                                var entry = alliance.Stream.Find(e =>
-                                    e.SenderId == player.Home.Id && e.StreamEntryType == 10);
-                                if (entry != null) alliance.RemoveEntry(entry);
+                            Resources.Players.LogoutById(player.Home.Id);
 
-                                if (alliance.Online < 1)
-                                    Resources.Alliances.Remove(alliance.Id);
-                                /*Logger.Log($"Uncached Clan {alliance.Id} because no member is online.", GetType(),
-                                        ErrorLevel.Debug);*/
-                                else alliance.UpdateOnlineCount();
+                            if (player.Home.AllianceInfo.HasAlliance)
+                            {
+                                var alliance = await Resources.Alliances.GetAllianceAsync(player.Home.AllianceInfo.Id);
+                                if (alliance != null)
+                                {
+                                    var entry = alliance.Stream.Find(e =>
+                                        e.SenderId == player.Home.Id && e.StreamEntryType == 10);
+                                    if (entry != null) alliance.RemoveEntry(entry);
+
+                                    if (alliance.Online < 1)
+                                        Resources.Alliances.Remove(alliance.Id);
+                                    /*Logger.Log($"Uncached Clan {alliance.Id} because no member is online.", GetType(),
+                                            ErrorLevel.Debug);*/
+                                    else alliance.UpdateOnlineCount();
+                                }
                             }
                         }
-                    }
+                }
+
+                var remoteAddress = (IPEndPoint)Channel.RemoteAddress;
+
+                Logger.Log($"Client {remoteAddress.Address.MapToIPv4()}:{remoteAddress.Port} disconnected.", GetType(),
+                    ErrorLevel.Debug);
+
+                WebhookUtils.SendNotify(Resources.Configuration.Plr_Webhook, Resources.LangConfiguration.PlrConnLost.Replace("%PlayerName", player.Home.Name), "Player Log");
+
+                base.ChannelUnregistered(context);
             }
-
-            var remoteAddress = (IPEndPoint) Channel.RemoteAddress;
-
-            Logger.Log($"Client {remoteAddress.Address.MapToIPv4()}:{remoteAddress.Port} disconnected.", GetType(),
-                ErrorLevel.Debug);
-            
-            WebhookUtils.SendNotify(Resources.Configuration.Plr_Webhook, Resources.LangConfiguration.PlrConnLost.Replace("%PlayerName", player.Home.Name), "Player Log");
-
-            base.ChannelUnregistered(context);
+            catch (Exception e)
+            {
+                WebhookUtils.SendError(Resources.Configuration.error_webhook, $"An Server crash has been detected\n```{e.Message}\n{e.StackTrace}```Server will continue to work", "Crash detected");
+            }
         }
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)

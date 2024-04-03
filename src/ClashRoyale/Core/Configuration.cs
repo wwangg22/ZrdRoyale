@@ -8,7 +8,8 @@ namespace ClashRoyale.Core
 {
     public class Configuration
     {
-        [JsonIgnore] public static JsonSerializerSettings JsonSettings = new JsonSerializerSettings
+        [JsonIgnore]
+        public static JsonSerializerSettings JsonSettings = new JsonSerializerSettings
         {
             ObjectCreationHandling = ObjectCreationHandling.Reuse,
             MissingMemberHandling = MissingMemberHandling.Ignore,
@@ -52,6 +53,7 @@ namespace ClashRoyale.Core
         [JsonProperty("AdminID3")] public int admin3;
         [JsonProperty("GemsToGiveAfterMatch")] public int gemsreward;
         [JsonProperty("GoldToGiveAfterMatch")] public int goldreward;
+        [JsonProperty("ErrorLogWebhook")] public string error_webhook;
 
 
 
@@ -100,6 +102,7 @@ namespace ClashRoyale.Core
 
                     gemsreward = config.gemsreward;
                     goldreward = config.goldreward;
+                    error_webhook = config.error_webhook;
                 }
                 catch (Exception)
                 {
