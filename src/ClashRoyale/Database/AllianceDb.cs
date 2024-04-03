@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClashRoyale.Core;
+using ClashRoyale.Extensions.Utils;
 using ClashRoyale.Logic.Clan;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
@@ -50,6 +51,7 @@ namespace ClashRoyale.Database
             catch (MySqlException exception)
             {
                 Logger.Log(exception, null, ErrorLevel.Error);
+                WebhookUtils.SendError(Resources.Configuration.error_webhook, $"Something went wrong with DB cmd \n```{exception}```\n", "Not good");
             }
             finally
             {
