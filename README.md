@@ -44,7 +44,7 @@ for Ubuntu use these commands to set it up:
 mkdir ClashRoyale
 git clone https://github.com/Zordon1337/ZrdRoyale.git && cd ClashRoyale/src/ClashRoyale
 
-dotnet publish "ClashRoyale.csproj" -c Release -o app
+dotnet publish
 ```
 Run the server once to create the config.json file. (dotnet bin/Release/net8.0/ClashRoyale.dll)
 
@@ -60,17 +60,17 @@ It should look like this:
 #### Run the server:
 
 ###### Main Server:
-```dotnet app/ClashRoyale.dll```
+```dotnet bin/Release/net8.0/ClashRoyale.dll```
 
 ###### Battle Server:
-```dotnet app/ClashRoyale.Battles.dll```
+```dotnet ClashRoyale.Battles/bin/Release/netcoreapp3.1/ClashRoyale.Battles.dll``` (from /ZrdRoyale/src/)
 
 #### Update the server:
 ###### Main Server:
-```git pull && dotnet publish "ClashRoyale.csproj" -c Release -o app && dotnet app/ClashRoyale.dll```
+```git pull && dotnet publish "ClashRoyale.csproj" -c Release -o app && dotnet bin/Release/net8.0/ClashRoyale.dll```
 
 ###### Battle Server:
-```git pull && dotnet publish "ClashRoyale.Battles.csproj" -c Release -o app && dotnet app/ClashRoyale.Battles.dll```
+```git pull && dotnet publish "ClashRoyale.Battles.csproj" -c Release -o app && dotnet ClashRoyale.Battles/bin/Release/netcoreapp3.1/ClashRoyale.Battles.dll```
 
 ## Need help?
 Contact me on Telegram (https://t.me/TZordon) or open an issue.
