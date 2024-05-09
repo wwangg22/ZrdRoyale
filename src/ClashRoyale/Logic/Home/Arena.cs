@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ClashRoyale.Files;
 using ClashRoyale.Files.CsvLogic;
@@ -39,7 +39,23 @@ namespace ClashRoyale.Logic.Home
 
             UpdateClanTrophies();
         }
+        public void SetTrophies(int trophies)
+        {
+            while (true)
+            {
+                var data = GetNextArenaData();
+                if (data == null) break;
 
+                if (data.TrophyLimit <= Trophies + trophies)
+                    CurrentArena = data.Arena;
+                else
+                    break;
+            }
+
+            Trophies = trophies;
+
+            UpdateClanTrophies();
+        }
         /// <summary>
         ///     When a player losses trophies he might drop into a lower Arena and update it in the clan
         /// </summary>
