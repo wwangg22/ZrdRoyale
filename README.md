@@ -31,7 +31,7 @@ Remake README.md
 ## Battles
 The server supports battles, for those a patched client is neccessary.
 
-[See the wiki for a tutorial](https://github.com/retroroyale/ClashRoyale/wiki/Patch-for-battles)
+[See the wiki for a tutorial](https://github.com/Erder00/ZrdRoyale/wiki)
 
 ## How to start
 
@@ -46,9 +46,16 @@ git clone https://github.com/Zordon1337/ZrdRoyale.git && cd ClashRoyale/src/Clas
 
 dotnet publish "ClashRoyale.csproj" -c Release -o app
 ```
-Run the server once to create the config.json file.
+Run the server once to create the config.json file. (dotnet bin/Release/net8.0/ClashRoyale.dll)
 
 To configurate your server, such as the database you have to edit the ```config.json``` file.
+
+Run it again to actually start it: ```dotnet bin/Release/net8.0/ClashRoyale.dll```
+
+It should look like this:
+
+
+![running server](https://i.imgur.com/QKKW9QV.png)
 
 #### Run the server:
 
