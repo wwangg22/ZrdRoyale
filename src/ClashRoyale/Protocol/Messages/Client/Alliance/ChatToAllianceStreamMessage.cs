@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using ClashRoyale.Database;
 using ClashRoyale.Logic;
@@ -67,10 +67,15 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                             }
                             else
                             {
-                                await new ServerErrorMessage(Device)
+                                var entry = new ChatStreamEntry
                                 {
-                                    Message = $"You're not admin bruh"
-                                }.SendAsync();
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
                             }
                             break;
                     }
@@ -92,10 +97,15 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                             }
                             else
                             {
-                                await new ServerErrorMessage(Device)
+                                var entry = new ChatStreamEntry
                                 {
-                                    Message = $"You're not admin bruh"
-                                }.SendAsync();
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
                             }
                             break;
                     }
@@ -109,10 +119,15 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                             }
                             else
                             {
-                                await new ServerErrorMessage(Device)
+                                var entry = new ChatStreamEntry
                                 {
-                                    Message = $"You're not admin bruh"
-                                }.SendAsync();
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
                             }
                             break;
                         }
@@ -126,31 +141,122 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                             }
                             else
                             {
-                                await new ServerErrorMessage(Device)
+                                var entry = new ChatStreamEntry
                                 {
-                                    Message = $"You're not admin bruh"
-                                }.SendAsync();
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
                             }
                             break;    
                     }
 
                     case "/status":
                     {
-                        await new ServerErrorMessage(Device)
-                        {
-                            Message =
-                                $"Online Players: {Resources.Players.Count}\nTotal Players: {await PlayerDb.CountAsync()}\n1v1 Battles: {Resources.Battles.Count}\n2v2 Battles: {Resources.DuoBattles.Count}\nTotal Clans: {await AllianceDb.CountAsync()}\nUptime: {DateTime.UtcNow.Subtract(Resources.StartTime).ToReadableString()}"
-                        }.SendAsync();
+                            
+                            if (ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
+                            {
+                                var entry = new ChatStreamEntry
+                                {
+                                    Message =
+                                    $"Server status:\nBuild version: 1.5 (for 1.9.2)\nFingerprint SHA:\n{Resources.Fingerprint.Sha}\nOnline Players: {Resources.Players.Count}\nTotal Players: {await PlayerDb.CountAsync()}\n1v1 Battles: {Resources.Battles.Count}\n2v2 Battles: {Resources.DuoBattles.Count}\nTotal Clans: {await AllianceDb.CountAsync()}\nUptime: {DateTime.UtcNow.Subtract(Resources.StartTime).ToReadableString()}\nUsed RAM: {System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / (1024 * 1024) + " MB"}"
+                                };
 
-                        break;
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
+                            }
+                            else
+                            {
+                                var entry = new ChatStreamEntry
+                                {
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
+                            }
+                            break;    
                     }
 
-                    /*case "/free":
+                    case "/help":
                     {
-                        Device.Player.Home.FreeChestTime = Device.Player.Home.FreeChestTime.Subtract(TimeSpan.FromMinutes(245));
-                        Device.Disconnect();
-                        break;
-                    }*/
+                            
+                            if (ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
+                            {
+                                var entry = new ChatStreamEntry
+                                {
+                                    Message =
+                                    $"List of commands:\n/max - open all cards max. level\n/unlock - open all cards\n/gold x - give out gold, where x - amount of gold\n/ gems x - give out gems, where x - amount of gems\n/ status - a command that shows the server status (needed for admins)\n / free - resets the timer of the free chest\n/trophies x - adds trophies, where x - the number of trophies (can be negative)\n/ set x - the specified number of trophies is available, where x - the number of trophies"
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
+                            }
+                            else
+                            {
+                                var entry = new ChatStreamEntry
+                                {
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
+                            }
+                            break;    
+                    }
+
+                    case "/set":
+                    {
+                            if (ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
+                            {
+                                Device.Player.Home.Arena.SetTrophies(cmdValue);
+                                Device.Disconnect();
+                            }
+                            else
+                            {
+                                var entry = new ChatStreamEntry
+                                {
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
+                            }
+                            break; 
+                    }
+
+                    case "/free":
+                    {
+                            if (ClashRoyale.Extensions.Utils.AdminUtils.CheckIfAdmin((int)Device.Player.Home.Id))
+                            {
+                                Device.Player.Home.FreeChestTime = Device.Player.Home.FreeChestTime.Subtract(TimeSpan.FromMinutes(245));
+                                Device.Disconnect();
+                            }
+                            else
+                            {
+                                var entry = new ChatStreamEntry
+                                {
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
+                            }
+                            break; 
+                    }
 
                         /*case "/replay":
                         {
@@ -169,17 +275,33 @@ namespace ClashRoyale.Protocol.Messages.Client.Alliance
                                 Device.Disconnect();
                             } else
                             {
-                                await new ServerErrorMessage(Device)
+                                var entry = new ChatStreamEntry
                                 {
-                                    Message = $"You're not admin bruh"
-                                }.SendAsync();
+                                    Message =
+                                    "only admins can use / commands."
+                                };
+
+                                entry.SetSender(Device.Player);
+
+                                alliance.AddEntry(entry);
                             }
                             
 
                             
                             break;
                         }
-                } 
+                    default:
+                        var error = new ChatStreamEntry
+                        {
+                            Message =
+                             $"Command not found. Use /help for the list of commands."
+                        };
+
+                        error.SetSender(Device.Player);
+
+                        alliance.AddEntry(error);
+                        break;
+                }
             }
             else
             {
