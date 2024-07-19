@@ -459,7 +459,20 @@ namespace ClashRoyale.Logic
 
             // Profile
             {
-                packet.WriteVInt(Home.Arena.CurrentArena + 1); // Arena 
+                if (Home.Arena.CurrentArena >= 5)
+                {
+
+                    packet.WriteVInt(Home.Arena.CurrentArena + 2); // Arena
+
+
+                }
+                else
+                {
+
+                    packet.WriteVInt(Home.Arena.CurrentArena + 1); // Arena
+
+                }
+
                 packet.WriteVInt(Home.Arena.Trophies); // Trophies 
 
                 packet.WriteVInt(0);
