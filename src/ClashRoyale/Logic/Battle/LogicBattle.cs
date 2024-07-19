@@ -47,7 +47,7 @@ namespace ClashRoyale.Logic.Battle
             {
                 Location = Csv.Tables.Get(Csv.Files.Locations)
                           .GetData<Locations>(Csv.Tables.Get(Csv.Files.Arenas)
-                               .GetDataWithInstanceId<Arenas>(6).PvpLocation).GetInstanceId();
+                               .GetDataWithInstanceId<Arenas>(6).PvpLocation).GetInstanceId()+1;
             }
             Replay.Battle.Location = 15000000 + Location;
 
