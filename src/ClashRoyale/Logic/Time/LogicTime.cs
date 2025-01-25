@@ -26,7 +26,7 @@ namespace ClashRoyale.Logic.Time
         public void Update(float time)
         {
             ClientTick += (int) time * 20;
-            ServerTick += (int) time * 20;
+            ServerTick += (int) time * 20;//the 2 is a multiplier
         }
 
         public void Encode(IByteBuffer packet)

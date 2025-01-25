@@ -1,4 +1,5 @@
-﻿using ClashRoyale.Files;
+﻿using System;
+using ClashRoyale.Files;
 using ClashRoyale.Files.CsvLogic;
 using ClashRoyale.Utilities.Models.Battle;
 using ClashRoyale.Utilities.Netty;
@@ -116,7 +117,8 @@ namespace ClashRoyale.Logic.Home.Decks.Items
         public void EncodeAttack(IByteBuffer packet)
         {
             packet.WriteVInt(CardId);
-            packet.WriteVInt(Level);
+            Console.WriteLine("CardId: " + InstanceId);
+            packet.WriteVInt(Level); //level
         }
 
         public static int Id(int classId, int instanceId)

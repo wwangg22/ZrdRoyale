@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ClashRoyale.Logic.Home.Decks.Items;
 using ClashRoyale.Utilities.Netty;
@@ -13,12 +14,53 @@ namespace ClashRoyale.Logic.Home.Decks
 
         public void Initialize()
         {
-            for (var i = 0; i < 8; i++)
-            {
+            // for (var i = 0; i < 8; i++)
+            // {
+            //     var card = new Card(26, i, false);
+            //     Add(card);
+            //     foreach (var deck in Home.Decks) deck[i] = card.GlobalId;
+            // }
+            for ( var i = 0; i < 52; i ++){
                 var card = new Card(26, i, false);
+                
                 Add(card);
-                foreach (var deck in Home.Decks) deck[i] = card.GlobalId;
+                if (i==21){
+                    foreach(var deck in Home.Decks) deck[0] = card.GlobalId;
+                }
+                if (i==10){
+                    foreach(var deck in Home.Decks) deck[1] = card.GlobalId;
+                }
+                if (i==38){
+                    foreach(var deck in Home.Decks) deck[2] = card.GlobalId;
+                }
+                if (i==14){
+                    foreach(var deck in Home.Decks) deck[3] = card.GlobalId;
+                }
+                if (i==30){
+                    foreach(var deck in Home.Decks) deck[4] = card.GlobalId;
+                }
+               
             }
+            for ( var i = 0; i < 11; i ++){
+                var card = new Card(27, i, false);
+                Add(card);
+                if (i==0){
+                    foreach(var deck in Home.Decks) deck[5] = card.GlobalId;
+                }
+
+            }
+            for ( var i = 0; i < 14; i ++){
+                var card = new Card(28, i, false);
+                Add(card);
+                if (i == 11){
+                    foreach(var deck in Home.Decks) deck[6] = card.GlobalId;
+                }
+                if (i==0){
+                    foreach(var deck in Home.Decks) deck[7] = card.GlobalId;
+                }
+            }
+            
+
         }
 
         /// <summary>
@@ -54,12 +96,40 @@ namespace ClashRoyale.Logic.Home.Decks
             packet.WriteByte(255);
 
             foreach (var card in GetRange(0, 8))
-                card.Encode(packet);
+            {
+                if (card.CardRarity == Card.Rarity.Common){
+                    card.Level = 8;
+                }
+                else if (card.CardRarity == Card.Rarity.Rare){
+                    card.Level = 5;
+                }
+                else if (card.CardRarity == Card.Rarity.Epic){
+                    card.Level = 3;
+                }
+                else if (card.CardRarity == Card.Rarity.Legendary){
+                    card.Level = 0;
+                }
 
+                card.Encode(packet);
+            }
             packet.WriteVInt(Count - 8);
 
             foreach (var card in this.Skip(8))
+                {
+                if (card.CardRarity == Card.Rarity.Common){
+                    card.Level = 8;
+                }
+                else if (card.CardRarity == Card.Rarity.Rare){
+                    card.Level = 5;
+                }
+                else if (card.CardRarity == Card.Rarity.Epic){
+                    card.Level = 3;
+                }
+                else if (card.CardRarity == Card.Rarity.Legendary){
+                    card.Level = 0;
+                }
                 card.Encode(packet);
+            }
 
             packet.WriteVInt(Home.SelectedDeck); // CurrentSlot
         }
@@ -94,7 +164,10 @@ namespace ClashRoyale.Logic.Home.Decks
         public void EncodeAttack(IByteBuffer packet)
         {
             foreach (var card in GetRange(0, 8))
+            {
+                // card.Level = 10;
                 card.EncodeAttack(packet);
+            }
         }
 
         /// <summary>
@@ -202,6 +275,7 @@ namespace ClashRoyale.Logic.Home.Decks
         public void SawCard(int classId, int instanceId)
         {
             var card = GetCard(classId, instanceId);
+            // card.Level = 10;
             card.IsNew = false;
         }
     }

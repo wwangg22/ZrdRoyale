@@ -87,14 +87,14 @@ namespace ClashRoyale.Logic.Battle
             BattleTimer.Elapsed += Tick;
         }
 
-        public int BattleTime => (int) DateTime.UtcNow.Subtract(StartTime).TotalSeconds * 2;
+        public int BattleTime => (int) (DateTime.UtcNow.Subtract(StartTime).TotalSeconds * 2) * 2 ;
         public int BattleSeconds => BattleTime / 2;
 
         public bool IsRunning => BattleTimer.Enabled;
         public bool IsReady => Count >= (Is2V2 ? 4 : 2);
 
-        public static int MinTrophies = 0;
-        public static int MaxTrophy = 0;
+        public static int MinTrophies = 100;
+        public static int MaxTrophy = 200;
         
         public async void Start()
         {
@@ -108,12 +108,12 @@ namespace ClashRoyale.Logic.Battle
 
 
 
-                WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.BattleStarted.Replace("%id", BattleId.ToString()), "Battle Log");
+                //WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.BattleStarted.Replace("%id", BattleId.ToString()), "Battle Log");
                 //var second = false;
                 foreach (var player in this)
                 {
 
-                    WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.PlayerJoined.Replace("%id", BattleId.ToString()).Replace("%username", player.Home.Name), "Battle Log");
+                    //WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.PlayerJoined.Replace("%id", BattleId.ToString()).Replace("%username", player.Home.Name), "Battle Log");
                     Commands.Add(player.Home.Id, new Queue<byte[]>());
                     
                     // Add decks to replay
@@ -229,8 +229,8 @@ namespace ClashRoyale.Logic.Battle
                 packet.WriteVInt(i);
             }
 
-            var p = this[0].Home.ExpLevel - 1;
-            var e = this[1].Home.ExpLevel - 1;
+            var p = 8;//this[0].Home.ExpLevel - 1;
+            var e = 8; //this[1].Home.ExpLevel - 1;
 
             // Player Right Princess Tower
             packet.WriteVInt(e);
@@ -845,7 +845,7 @@ namespace ClashRoyale.Logic.Battle
             try
             {
                 
-                
+                // Console.WriteLine($"Tick at {DateTime.UtcNow}");
                 foreach (var player in ToArray())
                     if (player.Device.IsConnected)
                     {
@@ -877,11 +877,14 @@ namespace ClashRoyale.Logic.Battle
                         }
                         else
                         {
+                            // Console.Write("Turn: " + BattleTime);
+                            // Console.WriteLine("Sent SectorHeartbeat to " + player.Home.Id);
                             await new SectorHearbeatMessage(player.Device)
                             {
                                 Turn = BattleTime,
                                 Commands = GetOwnQueue(player.Home.Id)
                             }.SendAsync();
+                            // Console.WriteLine("Sent SectorHeartbeat to " + player.Home.Name);
                         }
                     }
                     else
@@ -890,7 +893,7 @@ namespace ClashRoyale.Logic.Battle
                     }
                 if(bShouldSendEndMatch)
                 {
-                    WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.BattleEnded.Replace("%id", BattleId.ToString()), "Battle Log");
+                    //WebhookUtils.SendNotify(Resources.Configuration.BL_Webhook, Resources.LangConfiguration.BattleEnded.Replace("%id", BattleId.ToString()), "Battle Log");
                     bShouldSendEndMatch = false;
                 }
                 if (FindIndex(p => p?.Device.SecondsSinceLastCommand < 10) <= -1)

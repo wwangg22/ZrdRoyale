@@ -22,6 +22,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Sector
             Reader.ReadVInt();
             Tick = Reader.ReadVInt();
             Count = Reader.ReadVInt();
+            // Console.WriteLine($"[Decode] Tick={Tick}, Count={Count}");
         }
 
         public override void Process()
@@ -38,6 +39,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Sector
             for (var i = 0; i < Count; i++)
             {
                 var type = Reader.ReadVInt();
+                // Console.WriteLine("type: " + type); 
 
                 if (type >= 500) break;
 

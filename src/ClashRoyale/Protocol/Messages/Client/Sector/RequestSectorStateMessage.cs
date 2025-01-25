@@ -1,6 +1,7 @@
 ﻿using ClashRoyale.Logic;
 using ClashRoyale.Utilities.Netty;
 using DotNetty.Buffers;
+using System;
 
 namespace ClashRoyale.Protocol.Messages.Client.Sector
 {
@@ -17,6 +18,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Sector
         public override void Decode()
         {
             LastTick = Reader.ReadVInt();
+            // Console.WriteLine($"[Decode] LastTick={LastTick}");
         }
     }
 }

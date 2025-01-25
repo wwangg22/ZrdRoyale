@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ClashRoyale.Battles.Logic.Session;
 using ClashRoyale.Utilities.Netty;
 
@@ -20,6 +21,9 @@ namespace ClashRoyale.Battles.Protocol.Messages.Server
             Writer.WriteVInt(0);
 
             Writer.WriteVInt(Commands.Count);
+
+            // 1) Print out what’s in the queue (without removing it)
+           
 
             for (var i = 0; i < Commands.Count; i++) Writer.WriteBytes(Commands.Dequeue());
         }

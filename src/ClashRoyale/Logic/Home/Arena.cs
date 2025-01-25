@@ -10,7 +10,7 @@ namespace ClashRoyale.Logic.Home
     {
         public Arena()
         {
-            CurrentArena = 1;
+            CurrentArena = 11;
         }
 
         [JsonIgnore] public Home Home { get; set; }

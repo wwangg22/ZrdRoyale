@@ -46,6 +46,7 @@ namespace ClashRoyale.Battles.Logic.Battle
         {
             try
             {
+                Console.WriteLine($"Tick at {DateTime.UtcNow}");
                 foreach (var ctx in Session.ToArray())
                     if (ctx.Active)
                     {

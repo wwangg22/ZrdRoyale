@@ -506,7 +506,7 @@ namespace ClashRoyale.Logic
 
                 packet.WriteVInt(5);
                 packet.WriteVInt(1);
-                packet.WriteVInt(Home.Gold); // Gold
+                packet.WriteVInt(10000000); // Gold Home.Gold
 
                 packet.WriteVInt(5);
                 packet.WriteVInt(3);
@@ -518,7 +518,7 @@ namespace ClashRoyale.Logic
 
                 packet.WriteVInt(5);
                 packet.WriteVInt(5);
-                packet.WriteVInt(Home.Gold); // Gold
+                packet.WriteVInt(10000000); // Gold Home.gold
 
                 packet.WriteVInt(5);
                 packet.WriteVInt(13);
@@ -581,11 +581,11 @@ namespace ClashRoyale.Logic
             packet.WriteVInt(0); // NPC? / Count?
             packet.WriteVInt(0);
 
-            packet.WriteVInt(Home.Diamonds); // Diamonds
+            packet.WriteVInt(10000000); // Diamonds Home.Diamonds
             packet.WriteVInt(Home.Diamonds); // FreeDiamonds
 
             packet.WriteVInt(Home.ExpPoints); // ExpPoints
-            packet.WriteVInt(Home.ExpLevel); // ExpLevel
+            packet.WriteVInt(Home.ExpLevel); // ExpLevel Home.ExpLevel
 
             packet.WriteVInt(0); // AvatarUserLevelTier
 

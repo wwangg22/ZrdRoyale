@@ -1,4 +1,5 @@
-﻿using ClashRoyale.Logic;
+﻿using System;
+using ClashRoyale.Logic;
 using ClashRoyale.Logic.Battle;
 using ClashRoyale.Protocol.Messages.Server;
 using ClashRoyale.Utilities.Netty;
@@ -54,6 +55,7 @@ namespace ClashRoyale.Protocol.Commands.Client
             }
             else
             {
+                Console.WriteLine("StartMatchmakeCommand: Process: Is2V2 is false");
                 var enemy = Resources.Battles.Dequeue;
                 if (enemy != null)
                 {
@@ -73,6 +75,35 @@ namespace ClashRoyale.Protocol.Commands.Client
                 {
                     Resources.Battles.Enqueue(Device.Player);
                 }
+            }
+        }
+    }
+
+    public static class AdminUtilities
+    {
+        public static void ForceStartMatch(Device device)
+        {
+            // This replicates the logic in StartMatchmakeCommand.Process()
+            Console.WriteLine("ForceStartMatch: Is2V2 is false");
+            var enemy = Resources.Battles.Dequeue;
+            if (enemy != null)
+            {
+                var battle = new LogicBattle(false, enemy.Home.Arena.CurrentArena + 1)
+                {
+                    device.Player,
+                    enemy
+                };
+
+                Resources.Battles.Add(battle);
+
+                device.Player.Battle = battle;
+                enemy.Battle = battle;
+
+                battle.Start();
+            }
+            else
+            {
+                Resources.Battles.Enqueue(device.Player);
             }
         }
     }

@@ -2,6 +2,8 @@
 using ClashRoyale.Protocol.Messages.Server;
 using ClashRoyale.Utilities.Netty;
 using DotNetty.Buffers;
+using System;
+
 
 namespace ClashRoyale.Protocol.Messages.Client.Sector
 {
@@ -36,6 +38,8 @@ namespace ClashRoyale.Protocol.Messages.Client.Sector
 
             Value1 = Reader.ReadVInt();
             Value2 = Reader.ReadVInt();
+            Console.WriteLine($"[Decode] Type={Type}, HighId={SenderHighId}, LowId={SenderLowId}, " +
+                      $"Tick={Tick}, Unknown3={Unknown3}, Value1={Value1}, Value2={Value2}");
         }
 
         public override async void Process()
@@ -127,6 +131,8 @@ namespace ClashRoyale.Protocol.Messages.Client.Sector
                             var enemy = battle.GetEnemy(home.Id);
 
                             if (enemy != null)
+                                {
+
                                 await new BattleEventMessage(enemy)
                                 {
                                     Type = Type,
@@ -136,6 +142,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Sector
                                     HighId = SenderHighId,
                                     LowId = SenderLowId
                                 }.SendAsync();
+                                }
 
                             break;
                         }
