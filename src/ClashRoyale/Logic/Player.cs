@@ -33,6 +33,8 @@ namespace ClashRoyale.Logic
         [JsonIgnore] public LogicBattle Battle { get; set; }
         [JsonIgnore] public Device Device { get; set; }
 
+        [JsonIgnore] public bool BattleMaster { get; set; }
+
         public void RankingEntry(IByteBuffer packet)
         {
             packet.WriteVInt(Home.ExpLevel);

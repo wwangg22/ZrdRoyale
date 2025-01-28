@@ -97,7 +97,9 @@ namespace ClashRoyale.Protocol.Commands.Client
                 Resources.Battles.Add(battle);
 
                 device.Player.Battle = battle;
+                device.Player.BattleMaster = false;
                 enemy.Battle = battle;
+                enemy.BattleMaster = true;
 
                 battle.Start();
             }
