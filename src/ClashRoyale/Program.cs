@@ -98,7 +98,7 @@ namespace ClashRoyale
         {
             try
             {
-                _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 5001);
+                _listener = new TcpListener(IPAddress.Any, 5001);
                 _listener.Start();
                 Console.WriteLine("TCP server started on 127.0.0.1:5001");
 
