@@ -87,7 +87,7 @@ namespace ClashRoyale.Logic.Battle
             BattleTimer.Elapsed += Tick;
         }
 
-        public int BattleTime => (int) (DateTime.UtcNow.Subtract(StartTime).TotalSeconds * 1) * 2 ;
+        public int BattleTime => (int) (DateTime.UtcNow.Subtract(StartTime).TotalSeconds * 2) * 2 ;
         public int BattleSeconds => BattleTime / 2;
 
         public bool IsRunning => BattleTimer.Enabled;
